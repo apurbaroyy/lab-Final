@@ -26,7 +26,7 @@ public class DBConnection {
         String url="jdbc:mysql://localhost:3306/test";
         try {
 
-            connection = DriverManager.getConnection(url,"root","1234");
+            connection = DriverManager.getConnection(url,"root","apurbaict");
             //connection = DriverManager.getConnection(url,"scott","tiger");
             //System.out.println(connection);
         } catch (SQLException e) {
@@ -50,4 +50,5 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
 }
