@@ -3,7 +3,21 @@ package com.example.TestSpringJPA;
 import jakarta.persistence.*;
 
 @Entity
-public class User {
+@Table(name = "students")
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    
+    private Double cgpa; // Changed from email to cgpa (Double for decimals)
+
+    // Default Constructor (Required by JPA)
+    public Student() {}
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -20,20 +34,11 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public Double getCgpa() {
+        return cgpa;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCgpa(Double cgpa) {
+        this.cgpa = cgpa;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-    private String email;
-
-    // Getters and setters
 }
