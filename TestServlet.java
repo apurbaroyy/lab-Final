@@ -13,9 +13,15 @@ public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String name = request.getParameter("studentName");
-        String email = request.getParameter("studentEmail");
+        // Updated parameters to match Department details
+        String deptName = request.getParameter("deptName");
+        String numStudentsStr = request.getParameter("numStudents");
         String action = request.getParameter("action");
+
+        int numStudents = 0;
+        if (numStudentsStr != null && !numStudentsStr.isEmpty()) {
+            numStudents = Integer.parseInt(numStudentsStr);
+        }
 
         ServiceClass service = new ServiceClass();
         response.setContentType("text/html");
@@ -31,43 +37,44 @@ public class TestServlet extends HttpServlet {
 
         switch (action) {
             case "Insert":
-                if (service.insertDB(name, email)) {
-                    out.println("<p>Inserted successfully.</p>");
+                if (service.insertDB(deptName, numStudents)) {
+                    out.println("<p>Department inserted successfully.</p>");
                 } else {
                     out.println("<p>Insertion failed.</p>");
                 }
                 break;
 
             case "View":
-                List<String> students = service.viewDB();
-                if (students.isEmpty()) {
-                    out.println("<p>No students found.</p>");
+                List<String> departments = service.viewDB();
+                if (departments.isEmpty()) {
+                    out.println("<p>No departments found.</p>");
                 } else {
                     out.println("<table>");
-                    out.println("<tr><th>Name</th><th>Email</th></tr>");
-                    for (String student : students) {
-                        String[] parts = student.split(", Email: ");
-                        String studentName = parts[0].replace("Name: ", "");
-                        String studentEmail = parts.length > 1 ? parts[1] : "";
-                        out.println("<tr><td>" + studentName + "</td><td>" + studentEmail + "</td></tr>");
+                    out.println("<tr><th>Department Name</th><th>Number of Students</th></tr>");
+                    for (String dept : departments) {
+                        // Logic to parse the string format returned by ServiceClass
+                        String[] parts = dept.split(", Students: ");
+                        String name = parts[0].replace("Dept: ", "");
+                        String count = parts.length > 1 ? parts[1] : "0";
+                        out.println("<tr><td>" + name + "</td><td>" + count + "</td></tr>");
                     }
                     out.println("</table>");
                 }
                 break;
 
             case "Update":
-                if (service.updateDB(name, email)) {
+                if (service.updateDB(deptName, numStudents)) {
                     out.println("<p>Updated successfully.</p>");
                 } else {
-                    out.println("<p>Update failed. Name not found?</p>");
+                    out.println("<p>Update failed. Department Name not found?</p>");
                 }
                 break;
 
             case "Delete":
-                if (service.deleteDB(name)) {
+                if (service.deleteDB(deptName)) {
                     out.println("<p>Deleted successfully.</p>");
                 } else {
-                    out.println("<p>Delete failed. Name not found?</p>");
+                    out.println("<p>Delete failed. Department Name not found?</p>");
                 }
                 break;
 
@@ -75,6 +82,7 @@ public class TestServlet extends HttpServlet {
                 out.println("<p>Unknown action.</p>");
         }
 
+        out.println("<br><a href='index.jsp'>Back to Form</a>");
         out.println("</body></html>");
     }
 }
