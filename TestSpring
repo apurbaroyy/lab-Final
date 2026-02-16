@@ -6,7 +6,6 @@ public class ServiceClass extends DBConnection {
 
     public boolean insertDB(String deptName, String numStudents) {
         this.getConnection();
-        // MYSTUDENT এর পরিবর্তে DEPARTMENT টেবিল ব্যবহার করা হয়েছে
         String sql = "INSERT INTO DEPARTMENT(DEPT_NAME, NUM_STUDENTS) VALUES(?, ?)";
         try {
             ps = connection.prepareStatement(sql);
@@ -30,7 +29,7 @@ public class ServiceClass extends DBConnection {
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                // TestServlet.java এর স্প্লিট লজিকের সাথে মিলিয়ে স্ট্রিং বানানো হয়েছে
+            
                 result.add("Department: " + rs.getString("DEPT_NAME") + ", Number of Students: " + rs.getString("NUM_STUDENTS"));
             }
         } catch (SQLException e) {
