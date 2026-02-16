@@ -1,24 +1,29 @@
-public class Student {
-    private int id;
-    private String name;
-    private String email;
+public class Department {
+    private int id; 
+    private String deptName;
+    private int numStudents;
 
     public int getId() {
         return id;
     }
-    public String getName() {
-        return name;}
-    public String getEmail() {
-        return email;
+
+    public String getDeptName() {
+        return deptName;
     }
-    public void setEmail(String email) {
-        this.email = email;
+
+    public int getNumStudents() {
+        return numStudents;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
+    public void setNumStudents(int numStudents) {
+        this.numStudents = numStudents;
+    }
 }
